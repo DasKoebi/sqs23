@@ -25,7 +25,6 @@ public class BookService {
     }
 
     public String getBookByIsbn(String isbn){
-        GoogleISOApi googleISOApi1 = new GoogleISOApi();
         try {
             int length = isbn.length();
             //check if ISBN is 10 or 13 digits
