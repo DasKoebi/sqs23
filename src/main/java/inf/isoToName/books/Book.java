@@ -9,12 +9,12 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @Column(name ="Book name")
+    @Column(name ="name")
     private String name;
 
-    @Column(unique = true, name = "ISBN_10")
+    @Column(unique = true, name = "isbn10")
     private String isbn10;
-    @Column(unique = true, name = "ISBN_13")
+    @Column(unique = true, name = "isbn13")
 
     private String isbn13;
 
