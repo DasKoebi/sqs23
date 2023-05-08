@@ -67,17 +67,21 @@ public class BookService {
         Gson gson = new GsonBuilder().create();
         JsonObject object = gson.fromJson(response, JsonObject.class);
 
+
             Book tmp = new Book();
-            tmp.setName(object.items[0].volumeInfo.title);
-            for (int j=0; j<object.items[0].volumeInfo.industryIdentifiers.length; j++){
-                if(object.items[0].volumeInfo.industryIdentifiers[j].type.equals("ISBN_13"))
-                    tmp.setIsbn_13(object.items[0].volumeInfo.industryIdentifiers[j].identifier);
-                else if (object.items[0].volumeInfo.industryIdentifiers[j].type.equals("ISBN_10")) {
-                    tmp.setIsbn_10(object.items[0].volumeInfo.industryIdentifiers[j].identifier);
+            if(object.items.length == 1) {
+                tmp.setName(object.items[0].volumeInfo.title);
+                for (int j = 0; j < object.items[0].volumeInfo.industryIdentifiers.length; j++) {
+                    if (object.items[0].volumeInfo.industryIdentifiers[j].type.equals("ISBN_13"))
+                        tmp.setIsbn_13(object.items[0].volumeInfo.industryIdentifiers[j].identifier);
+                    else if (object.items[0].volumeInfo.industryIdentifiers[j].type.equals("ISBN_10")) {
+                        tmp.setIsbn_10(object.items[0].volumeInfo.industryIdentifiers[j].identifier);
+                    }
                 }
+                saveBookinDatabase(tmp);
+                return object.items[0].volumeInfo.title;
             }
-            saveBookinDatabase(tmp);
-            return object.items[0].volumeInfo.title;
+            return "ISBN needs to be unique";
     }
 
     private void saveBookinDatabase(Book book){
