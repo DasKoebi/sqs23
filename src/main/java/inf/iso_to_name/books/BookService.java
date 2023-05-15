@@ -68,7 +68,7 @@ public class BookService {
         JsonObject object = gson.fromJson(response, JsonObject.class);
 
             Book tmp = new Book();
-            if(object.getItems().length ==1){
+            if(object.getItems().length >0){
                 tmp.setName((object.getItems()[0].getVolumeInfo().getTitle()));
                 for (int j = 0; j< object.getItems()[0].getVolumeInfo().getIndustryIdentifiers().length; j++) {
                     if(object.getItems()[0].getVolumeInfo().getIndustryIdentifiers()[j].getType().equals("ISBN_13"))
@@ -80,7 +80,7 @@ public class BookService {
                 saveBookinDatabase(tmp);
                 return object.getItems()[0].getVolumeInfo().getTitle();
             }
-            return "ISBN needs to be unique";
+            return "No Book found";
     }
 
     private void saveBookinDatabase(Book book){
