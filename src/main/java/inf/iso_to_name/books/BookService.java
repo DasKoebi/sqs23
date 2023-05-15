@@ -67,19 +67,18 @@ public class BookService {
         Gson gson = new GsonBuilder().create();
         JsonObject object = gson.fromJson(response, JsonObject.class);
 
-
             Book tmp = new Book();
-            if(object.items.length == 1) {
-                tmp.setName(object.items[0].volumeInfo.title);
-                for (int j = 0; j < object.items[0].volumeInfo.industryIdentifiers.length; j++) {
-                    if (object.items[0].volumeInfo.industryIdentifiers[j].type.equals("ISBN_13"))
-                        tmp.setIsbn13(object.items[0].volumeInfo.industryIdentifiers[j].identifier);
-                    else if (object.items[0].volumeInfo.industryIdentifiers[j].type.equals("ISBN_10")) {
-                        tmp.setIsbn10(object.items[0].volumeInfo.industryIdentifiers[j].identifier);
+            if(object.getItems().length ==1){
+                tmp.setName((object.getItems()[0].getVolumeInfo().getTitle()));
+                for (int j = 0; j< object.getItems()[0].getVolumeInfo().getIndustryIdentifiers().length; j++) {
+                    if(object.getItems()[0].getVolumeInfo().getIndustryIdentifiers()[j].getType().equals("ISBN_13"))
+                        tmp.setIsbn13(object.getItems()[0].getVolumeInfo().getIndustryIdentifiers()[j].getIdentifier());
+                    else if (object.getItems()[0].getVolumeInfo().getIndustryIdentifiers()[j].getType().equals("ISBN_10")) {
+                        tmp.setIsbn10(object.getItems()[0].getVolumeInfo().getIndustryIdentifiers()[j].getIdentifier());
                     }
                 }
                 saveBookinDatabase(tmp);
-                return object.items[0].volumeInfo.title;
+                return object.getItems()[0].getVolumeInfo().getTitle();
             }
             return "ISBN needs to be unique";
     }

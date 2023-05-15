@@ -1,5 +1,13 @@
 package inf.iso_to_name.json;
 
 public class JsonObject {
-    public Item[] items;
+    private Item[] items;
+
+    public Item[] getItems() {
+        return items;
+    }
+
+    public void setItems(Item[] items) {
+        this.items = items;
+    }
 }
