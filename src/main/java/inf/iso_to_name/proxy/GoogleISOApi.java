@@ -3,13 +3,10 @@ package inf.iso_to_name.proxy;
 import java.io.IOException;
 
 public class GoogleISOApi {
-    private static final String apiKey = System.getenv().get("API_KEY");
-    private static final String baseUri = System.getenv().getOrDefault("BASE_URI", "https://www.googleapis.com/books/v1/volumes?q=isbn:");
-    //order getProperty("");
+    private static final String API_KEY = System.getenv().get("API_KEY");
+    private static final String BASE_URI = System.getenv().getOrDefault("BASE_URI", "https://www.googleapis.com/books/v1/volumes?q=isbn:");
     public String getName(String isbn) throws IOException, InterruptedException {
-        System.out.println(apiKey);
-        String url = baseUri+isbn+"&key="+apiKey;
-        String name = Proxy.getMessage(url);
-        return  name;
+        String url = BASE_URI+isbn+"&key="+API_KEY;
+        return Proxy.getMessage(url);
     }
 }
