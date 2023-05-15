@@ -1,4 +1,4 @@
-package inf.isoToName.proxy;
+package inf.iso_to_name.proxy;
 
 import java.io.IOException;
 

@@ -1,4 +1,4 @@
-package inf.isoToName.books;
+package inf.iso_to_name.books;
 
 import jakarta.persistence.*;
 
@@ -37,20 +37,20 @@ public class Book {
         this.name = name;
     }
 
-    public String getIsbn_10() {
+    public String getIsbn10() {
         return isbn10;
     }
 
-    public void setIsbn_10(String isbn_10) {
-        this.isbn10 = isbn_10;
+    public void setIsbn10(String isbn10) {
+        this.isbn10 = isbn10;
     }
 
-    public String getIsbn_13() {
+    public String getIsbn13() {
         return isbn13;
     }
 
-    public void setIsbn_13(String isbn_13) {
-        this.isbn13 = isbn_13;
+    public void setIsbn13(String isbn13) {
+        this.isbn13 = isbn13;
     }
 
 }

@@ -1,4 +1,4 @@
-package inf.isoToName.books;
+package inf.iso_to_name.books;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,13 +24,13 @@ class BookTest {
     }
     @Test
     void setIsbn_10AndgetIsbn_10() {
-        myBook.setIsbn_10("1234567890");
-        assertEquals("1234567890",myBook.getIsbn_10());
+        myBook.setIsbn10("1234567890");
+        assertEquals("1234567890",myBook.getIsbn10());
     }
 
     @Test
     void setIsbn_13AndgetIsbn_13() {
-        myBook.setIsbn_13("1234567890123");
-        assertEquals("1234567890123",myBook.getIsbn_13());
+        myBook.setIsbn13("1234567890123");
+        assertEquals("1234567890123",myBook.getIsbn13());
     }
 }

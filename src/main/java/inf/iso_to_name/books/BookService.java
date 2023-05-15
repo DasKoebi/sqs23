@@ -1,9 +1,9 @@
-package inf.isoToName.books;
+package inf.iso_to_name.books;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import inf.isoToName.json.JsonObject;
-import inf.isoToName.proxy.GoogleISOApi;
+import inf.iso_to_name.json.JsonObject;
+import inf.iso_to_name.proxy.GoogleISOApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +24,7 @@ public class BookService {
         this.bookRepository = bookRepository;
     }
 
-    public String getBookByIsbn(String isbn){
+    public String getBookByIsbn(String isbn) throws IOException, InterruptedException {
         try {
             int length = isbn.length();
             //check if ISBN is 10 or 13 digits
@@ -49,10 +49,10 @@ public class BookService {
 
         } catch (IOException e) {
             logger.log(Level.SEVERE, e.getMessage(), e);
-            throw new RuntimeException(e);
+            throw new IOException(e);
         } catch (InterruptedException e) {
             logger.log(Level.SEVERE, e.getMessage(), e);
-            throw new RuntimeException(e);
+            throw new InterruptedException();
         } catch (NumberFormatException e) {
             logger.log(Level.SEVERE, e.getMessage(), e);
             return "ISBN only contains Numbers";
@@ -73,9 +73,9 @@ public class BookService {
                 tmp.setName(object.items[0].volumeInfo.title);
                 for (int j = 0; j < object.items[0].volumeInfo.industryIdentifiers.length; j++) {
                     if (object.items[0].volumeInfo.industryIdentifiers[j].type.equals("ISBN_13"))
-                        tmp.setIsbn_13(object.items[0].volumeInfo.industryIdentifiers[j].identifier);
+                        tmp.setIsbn13(object.items[0].volumeInfo.industryIdentifiers[j].identifier);
                     else if (object.items[0].volumeInfo.industryIdentifiers[j].type.equals("ISBN_10")) {
-                        tmp.setIsbn_10(object.items[0].volumeInfo.industryIdentifiers[j].identifier);
+                        tmp.setIsbn10(object.items[0].volumeInfo.industryIdentifiers[j].identifier);
                     }
                 }
                 saveBookinDatabase(tmp);

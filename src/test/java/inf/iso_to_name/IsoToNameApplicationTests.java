@@ -1,6 +1,5 @@
-package inf.isoToName;
+package inf.iso_to_name;
 
-import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
