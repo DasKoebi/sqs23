@@ -42,34 +42,34 @@ class BookServiceTest {
 
     @Test
     void testValidIsbn(){
-        assertTrue(bookService.is_isbn10_valid("1569319014"));
+        assertTrue(bookService.isIsbn10Valid("1569319014"));
     }
     @Test
     void testValidIsbn2(){
-        assertTrue(bookService.is_isbn10_valid("3644009473"));
+        assertTrue(bookService.isIsbn10Valid("3644009473"));
     }
     @Test
     void testValidIsbnWithX(){
-        assertTrue(bookService.is_isbn10_valid("354059101X"));
+        assertTrue(bookService.isIsbn10Valid("354059101X"));
     }
     @Test
     void testValidIsbnWithSmallX(){
-        assertTrue(bookService.is_isbn10_valid("354059101x"));
+        assertTrue(bookService.isIsbn10Valid("354059101x"));
     }
 
     @Test
     void testInvalidIsnb(){
-        assertFalse(bookService.is_isbn10_valid("1234567890"));
+        assertFalse(bookService.isIsbn10Valid("1234567890"));
     }
 
     @Test
     void testValidIsbn13(){
-        assertTrue(bookService.is_isbn13_valid("9781569319017"));
+        assertTrue(bookService.isIsbn13Valid("9781569319017"));
     }
 
     @Test
     void testInvalidIsbn13(){
-        assertFalse(bookService.is_isbn13_valid("9781569318017"));
+        assertFalse(bookService.isIsbn13Valid("9781569318017"));
     }
 
 }

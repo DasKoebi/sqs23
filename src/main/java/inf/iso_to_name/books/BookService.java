@@ -28,7 +28,7 @@ public class BookService {
         try {
             int length = isbn.length();
             //check if ISBN is 10 or 13 digits
-            if (length == 10 && is_isbn10_valid(isbn)|| length == 13 && is_isbn13_valid(isbn)) {
+            if (length == 10 && isIsbn10Valid(isbn)|| length == 13 && isIsbn13Valid(isbn)) {
 
             Double.parseDouble(isbn);
 
@@ -87,7 +87,7 @@ public class BookService {
         bookRepository.save(book);
     }
 
-    public boolean is_isbn10_valid(String isbn){
+    public boolean isIsbn10Valid(String isbn){
         char[] tmp = isbn.toCharArray();
         int a =0;
 
@@ -99,7 +99,7 @@ public class BookService {
         return rest == Integer.parseInt(String.valueOf(tmp[9]));
     }
 
-    public boolean is_isbn13_valid(String isbn){
+    public boolean isIsbn13Valid(String isbn){
         char[] tmp = isbn.toCharArray();
         int a ;
         int b= 0;
