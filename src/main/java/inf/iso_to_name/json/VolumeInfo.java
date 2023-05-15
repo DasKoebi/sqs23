@@ -1,6 +1,6 @@
 package inf.iso_to_name.json;
 
 public class VolumeInfo {
-    public static String title;
-    public static IndustryIdentifiers[] industryIdentifiers;
+    public String title;
+    public IndustryIdentifiers[] industryIdentifiers;
 }
