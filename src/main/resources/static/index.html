@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ISBN Nummer senden</title>
+</head>
+<body>
+    <div style="text-align: center;">
+        <h1>ISBN Nummer senden</h1>
+        <form id="isbnForm">
+            <input type="text" id="isbnInput" placeholder="ISBN-Nummer" required>
+            <br><br>
+            <input type="submit" value="Abschicken" onclick="sendISBN()">
+        </form>
+    </div>
+
+    <script>
+        function sendISBN() {
+            var isbn = document.getElementById("isbnInput").value;
+            var url = "http://localhost:8080/" + encodeURIComponent(isbn);
+            window.location.href = url;
+        }
+    </script>
+</body>
+</html>
