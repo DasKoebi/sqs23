@@ -13,7 +13,7 @@ COPY . .
 
 #actual container
 FROM openjdk:17-alpine
-ENV ARTIFACT_NAME=isoToName-0.0.1-SNAPSHOT.jar
+ENV ARTIFACT_NAME=isoToName-0.0.1-SNAPSHOT.jar 
 ENV APP_HOME=/usr/app
 
 WORKDIR $APP_HOME
