@@ -56,6 +56,9 @@ Diese Datenbank soll zum Cachen verwendet werden, damit doppelte Anfragen an die
 |------------|--------------------------------------------------------------------------------------------------|-------------------------------------------------------|-------------------------------------------------------|
 | `API_KEY`  | Der API-Key für die Google-Datenbank. Dieser wird benötigt um Abfragen bei Google zu ermöglichen | `A791023AKC843123`                                    | Keinen                                                |
 | `BASE_URI` | Die Base URI der Google-API, an diese werden die ISBN-Nummern gesendet.                          | `https://www.googleapis.com/books/v1/volumes?q=isbn:` | `https://www.googleapis.com/books/v1/volumes?q=isbn:` |
+| `SPRING_DATASOURCE_URL` | Hierbei handelt es sich um die URL, welche die Anwednung benötigt um sich mit der Datenbank zu verbinden. | `jdbc:postgresql://db:5432/postgres` | `jdbc:postgresql://host.docker.internal:5432/postgres` | 
+| `SPRING_DATASOURCE_USERNAME` | Hierbei handelt es sich um den Benutzername des Datenbankbenutzers | `postgres` | `postgres` |
+| `SPRING_DATASOURCE_PASSWORD` | Hierbei handelt es sich um das Passwort des Datenbankbenutzers | `changeMe!` | Keinen | 
 # 9. Entwurfsentscheidungen
 
 ## 9.1 Übermittlung der ISBN
