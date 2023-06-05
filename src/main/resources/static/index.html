@@ -9,16 +9,18 @@
         <form id="isbnForm">
             <input type="text" id="isbnInput" placeholder="ISBN-Nummer" required>
             <br><br>
-            <input type="submit" value="Abschicken" onclick="sendISBN()">
+            <input type="submit" value="Abschicken">
         </form>
     </div>
 
     <script>
-        function sendISBN() {
+        document.getElementById("isbnForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevent form submission
+
             var isbn = document.getElementById("isbnInput").value;
-            var url = "http://localhost:8080/" + encodeURIComponent(isbn);
+            var url = "http://localhost:8080/v1/books/" + encodeURIComponent(isbn);
             window.location.href = url;
-        }
+        });
     </script>
 </body>
 </html>
