@@ -1,22 +1,13 @@
-FROM gradle:8.1.1-jdk17-alpine as TEMP_BUILD_IMAGE
-ENV APP_HOME=/usr/app
-WORKDIR $APP_HOME
-COPY build.gradle settings.gradle $APP_HOME
+FROM gradle:8.1.1-jdk17-alpine as build
 
-COPY gradle $APP_HOME/gradle
 COPY --chown=gradle:gradle . /home/gradle/src
-USER root
-RUN chown -R gradle /home/gradle/src
+WORKDIR /home/gradle/src
+RUN gradle build --no-daemon 
 
-RUN gradle build || return 0
-COPY . .
-
-#actual container
 FROM openjdk:17-alpine
-ENV ARTIFACT_NAME=isoToName-0.0.1-SNAPSHOT.jar 
-ENV APP_HOME=/usr/app
 
-WORKDIR $APP_HOME
-COPY --from=TEMP_BUILD_IMAGE $APP_HOME/build/libs/$ARTIFACT_NAME .
+RUN mkdir /app
 
-ENTRYPOINT exec java -jar ${ARTIFACT_NAME}
+COPY --from=build /home/gradle/src/build/libs/*.jar /app/spring-boot-application.jar
+
+ENTRYPOINT ["java", "-XX:+UnlockExperimentalVMOptions", "-Djava.security.egd=file:/dev/./urandom","-jar","/app/spring-boot-application.jar"]
