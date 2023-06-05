@@ -9,7 +9,7 @@ services:
       - POSTGRES_PASSWORD=example
 
   java:
-    build: .
+    image: ghcr.io/daskoebi/sqs23:latest
     depends_on:
         - db
     restart: always
