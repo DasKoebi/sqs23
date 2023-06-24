@@ -28,8 +28,12 @@ jobs:
         distribution: 'temurin'
     - name: Validate Gradle wrapper
       uses: gradle/wrapper-validation-action@ccb4328a959376b642e027874838f60f8e596de3
-    - name: Build with Gradle
-      uses: gradle/gradle-build-action@749f47bda3e44aa060e82d7b3ef7e40d953bd629
-      with:
-        arguments: build
+    - name: Build and analyze with Gradle 
+      run: ./gradlew build jacocoTestReport sonarqube --info
+      env:
+        # Needed to get some information about the pull request, if any
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        # SonarCloud access token should be generated from https://sonarcloud.io/account/security/
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      
 
