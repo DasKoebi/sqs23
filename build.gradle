@@ -20,7 +20,7 @@ jacocoTestReport {
 	}
 }
 
-sonar {
+sonarcube {
   properties {
     property("sonar.projectKey", "sqs23")
     property("sonar.organization", "daskoebi")
