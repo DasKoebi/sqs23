@@ -16,14 +16,15 @@ repositories {
 
 jacocoTestReport {
 	reports {
+		xml.enabled true
 		xml.required = true
 	}
 }
 
-sonarcube {
+sonar {
   properties {
     property("sonar.projectKey", "sqs23")
-    property("sonar.organization", "daskoebi")
+    property("sonar.organization", "daskoebis3uymtubkavq43oq9r8h")
     property("sonar.host.url", "https://sonarcloud.io")
   }
 
