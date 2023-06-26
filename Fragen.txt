@@ -4,3 +4,16 @@ Wie soll 5. aussehen
 
 Wie soll 8. aufgebaut werden
 
+Qulatiy Gates SonarCloud
+
+Env bei 10 operability einbauen
+
+Hadolint in Action reinbauen
+
+K6 Falsche ISBN Testen bitte noch schauen bei flasher isbn 400 schemeisen
+
+OWASP action?
+Cypress Testname sprechend
+
+Gitgaur reinschreiben + dependency bot eingeschaltet
+
