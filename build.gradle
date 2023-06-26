@@ -16,7 +16,6 @@ repositories {
 
 jacocoTestReport {
 	reports {
-		xml.enabled true
 		xml.required = true
 	}
 }
