@@ -1,9 +1,12 @@
 package inf.iso_to_name.books;
 
 
+import inf.iso_to_name.proxy.GoogleISOApi;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -17,7 +20,7 @@ class BookServiceTest {
 
     private BookService bookService;
     @BeforeEach
-    public void setUp(){
+    public void setUp() throws IOException, InterruptedException {
         Book tmp = new Book();
         tmp.setIsbn10("1569319014");
         tmp.setIsbn13("9781569319017");
@@ -26,18 +29,17 @@ class BookServiceTest {
         List<Book> myBook = new ArrayList<>();
         myBook.add(tmp);
         BookRepository bookRepository = Mockito.mock(BookRepository.class);
+        GoogleISOApi googleISOApi = Mockito.mock(GoogleISOApi.class);
+        when(googleISOApi.getName("1569319014")).thenReturn("One Piece");
         when(bookRepository.findByisbn10("1569319014")).thenReturn(myBook);
         when(bookRepository.findByisbn13("9781569319017")).thenReturn(myBook);
         bookService = new BookService(bookRepository);
     }
 
     @Test
-    void testGetBookByIsbn10() {
-        try {
-            assertEquals("One Piece, Vol. 1", bookService.getBookByIsbn("1569319014"));
-        } catch (IOException | InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+    void getNameByIsbn() throws IOException, InterruptedException {
+        ResponseEntity<String> response = bookService.getNameByIsbn("1569319014");
+        assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
     @Test

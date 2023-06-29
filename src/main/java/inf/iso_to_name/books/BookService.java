@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import inf.iso_to_name.json.JsonObject;
 import inf.iso_to_name.proxy.GoogleISOApi;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -24,66 +25,58 @@ public class BookService {
         this.bookRepository = bookRepository;
     }
 
-    public String getBookByIsbn(String isbn) throws IOException, InterruptedException {
+
+    public ResponseEntity<String> getNameByIsbn(String isbn) throws IOException, InterruptedException {
         try {
             int length = isbn.length();
-            //check if ISBN is 10 or 13 digits
             if (length == 10 && isIsbn10Valid(isbn)|| length == 13 && isIsbn13Valid(isbn)) {
+                List<Book> myBook = bookRepository.findByisbn10(isbn);
 
-            Double.parseDouble(isbn);
-
-            //check if ISBN is stored in Database
-            List<Book> myBook = bookRepository.findByisbn10(isbn);
-
-            if(myBook.isEmpty()){
-                logger.log(Level.INFO, "ISBN_10 not found in Database");
-                myBook = bookRepository.findByisbn13(isbn);
                 if(myBook.isEmpty()){
-                    logger.log(Level.INFO, "ISBN_13 not found in Database");
-                    logger.log(Level.INFO, "Calling Google...");
-                    return callGoogleAPI(isbn);
-                }return myBook.get(0).getName();
-            }return myBook.get(0).getName();
+                    logger.log(Level.INFO, "ISBN_10 not found in Database");
+                    myBook = bookRepository.findByisbn13(isbn);
+                    if(myBook.isEmpty()){
+                        logger.log(Level.INFO, "ISBN_13 not found in Database");
+                        logger.log(Level.INFO, "Calling Google...");
+                        return callGoogle(isbn);
+                    }
+                }return ResponseEntity.ok(myBook.get(0).getName());
             }
-            return "Not a valid ISBN";
-
+            logger.log(Level.INFO, "ISBN not valid or not 10 / 13 digits");
+            return  ResponseEntity.badRequest().build();
         } catch (IOException e) {
             logger.log(Level.SEVERE, e.getMessage(), e);
             throw new IOException(e);
         } catch (InterruptedException e) {
             logger.log(Level.SEVERE, e.getMessage(), e);
             throw new InterruptedException();
-        } catch (NumberFormatException e) {
-            logger.log(Level.SEVERE, e.getMessage(), e);
-            return "ISBN only contains Numbers";
         }
     }
 
-    private String callGoogleAPI(String isbn) throws IOException, InterruptedException {
-
+    private ResponseEntity<String> callGoogle(String isbn) throws IOException, InterruptedException {
         GoogleISOApi googleISOApi = new GoogleISOApi();
         String response= googleISOApi.getName(isbn);
 
         Gson gson = new GsonBuilder().create();
         JsonObject object = gson.fromJson(response, JsonObject.class);
 
-            Book tmp = new Book();
-            if(object.getItems().length >0){
-                tmp.setName((object.getItems()[0].getVolumeInfo().getTitle()));
-                for (int j = 0; j< object.getItems()[0].getVolumeInfo().getIndustryIdentifiers().length; j++) {
-                    if(object.getItems()[0].getVolumeInfo().getIndustryIdentifiers()[j].getType().equals("ISBN_13"))
-                        tmp.setIsbn13(object.getItems()[0].getVolumeInfo().getIndustryIdentifiers()[j].getIdentifier());
-                    else if (object.getItems()[0].getVolumeInfo().getIndustryIdentifiers()[j].getType().equals("ISBN_10")) {
-                        tmp.setIsbn10(object.getItems()[0].getVolumeInfo().getIndustryIdentifiers()[j].getIdentifier());
-                    }
+        Book tmp = new Book();
+        if(object.getItems().length >0){
+            tmp.setName((object.getItems()[0].getVolumeInfo().getTitle()));
+            for (int j = 0; j< object.getItems()[0].getVolumeInfo().getIndustryIdentifiers().length; j++) {
+                if(object.getItems()[0].getVolumeInfo().getIndustryIdentifiers()[j].getType().equals("ISBN_13"))
+                    tmp.setIsbn13(object.getItems()[0].getVolumeInfo().getIndustryIdentifiers()[j].getIdentifier());
+                else if (object.getItems()[0].getVolumeInfo().getIndustryIdentifiers()[j].getType().equals("ISBN_10")) {
+                    tmp.setIsbn10(object.getItems()[0].getVolumeInfo().getIndustryIdentifiers()[j].getIdentifier());
                 }
-                saveBookinDatabase(tmp);
-                return object.getItems()[0].getVolumeInfo().getTitle();
             }
-            return "No Book found";
+            saveBookInDatabase(tmp);
+            return ResponseEntity.ok(object.getItems()[0].getVolumeInfo().getTitle());
+        }
+        return ResponseEntity.badRequest().build();
     }
 
-    private void saveBookinDatabase(Book book){
+    private void saveBookInDatabase(Book book){
         bookRepository.save(book);
     }
 
