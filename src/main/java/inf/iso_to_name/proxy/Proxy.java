@@ -28,4 +28,3 @@ public class Proxy {
         return response.body();
     }
 }
-
