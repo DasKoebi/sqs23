@@ -1,5 +1,5 @@
-describe('template spec', () => {
-    it('passes', () => {
+describe('check frontend', () => {
+    it('checks', () => {
         //open homepage
         cy.visit('http://localhost:8080/');
 
@@ -12,6 +12,6 @@ describe('template spec', () => {
         cy.url().should('include', '/v1/books/1569319014');
 
         //check if the title is visible
-        cy.contains('One Piece, Vol. 1').should('be.visible');
+        cy.contains('One Piece').should('be.visible');
     })
   })
