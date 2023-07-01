@@ -19,10 +19,13 @@ public class BookService {
 
     //@Autowired
     private final BookRepository bookRepository;
+    //@Autowired
+    private final GoogleISOApi googleISOApi;
 
     @Autowired
-    public BookService(BookRepository bookRepository){
+    public BookService(BookRepository bookRepository, GoogleISOApi googleISOApi){
         this.bookRepository = bookRepository;
+        this.googleISOApi = googleISOApi;
     }
 
 
@@ -53,8 +56,7 @@ public class BookService {
         }
     }
 
-    private ResponseEntity<String> callGoogle(String isbn) throws IOException, InterruptedException {
-        GoogleISOApi googleISOApi = new GoogleISOApi();
+    protected ResponseEntity<String> callGoogle(String isbn) throws IOException, InterruptedException {
         String response= googleISOApi.getName(isbn);
 
         Gson gson = new GsonBuilder().create();
