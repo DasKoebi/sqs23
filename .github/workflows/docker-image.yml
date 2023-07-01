@@ -21,6 +21,24 @@ jobs:
         with:
           dockerfile: ./Dockerfile
         
+      - name: Update Pull Request
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const output = `
+            #### Hadolint: \`${{ steps.hadolint.outcome }}\`
+            \`\`\`
+            ${process.env.HADOLINT_RESULTS}
+            \`\`\`
+            `;
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: output
+            })
+        
       - name: Login to DockerHub
         uses: docker/login-action@v2
         with:
