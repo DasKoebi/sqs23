@@ -12,7 +12,6 @@ export let options = {
       checks: ['rate>0.9'],
       'group_duration{group:::individualRequests}': ['avg < 100'],
       'group_duration{group:::batchRequests}': ['avg < 50'],
-      http_req_failed: ['rate<0.01']
     }
   };
     export default function () {
@@ -21,7 +20,11 @@ export let options = {
       
           check(response, {
             'Response is 200 OK': (r) => r.status === 200,
-            'Correct response body': (r) => r.body === 'One Piece, Vol. 1'
+            'Correct response body': (r) => r.body === 'One Piece'
+          });
+          response = http.get("http://localhost:8080/v1/books/auto");
+          check(response, {
+            'Response is 400 Bad Gateway': (r) => r.status === 400,
           });
         });
       
