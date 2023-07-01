@@ -33,12 +33,15 @@ class BookServiceTest {
         when(googleISOApi.getName("1569319014")).thenReturn("One Piece");
         when(bookRepository.findByisbn10("1569319014")).thenReturn(myBook);
         when(bookRepository.findByisbn13("9781569319017")).thenReturn(myBook);
-        bookService = new BookService(bookRepository);
+        when(googleISOApi.getName("354059101x")).thenReturn("{\"items\": [{\"volumeInfo\": {\"title\": \"Einführung in die Wirtschaftsinformatik\",\"industryIdentifiers\": [{\"type\": \"ISBN_10\",\"identifier\": \"354059101X\"},{\"type\": \"ISBN_13\",\"identifier\": \"9783540591016\"}]}}]}");
+        when(googleISOApi.getName("9783540591016")).thenReturn("{\"items\": [{\"volumeInfo\": {\"title\": \"Einführung in die Wirtschaftsinformatik\",\"industryIdentifiers\": [{\"type\": \"ISBN_10\",\"identifier\": \"354059101X\"},{\"type\": \"ISBN_13\",\"identifier\": \"9783540591016\"}]}}]}");
+        bookService = new BookService(bookRepository,googleISOApi);
     }
 
+
     @Test
-    void getNameByIsbn() throws IOException, InterruptedException {
-        ResponseEntity<String> response = bookService.getNameByIsbn("1569319014");
+    void getNameByIsbn13() throws IOException, InterruptedException {
+        ResponseEntity<String> response = bookService.getNameByIsbn("9783540591016");
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
