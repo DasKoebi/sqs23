@@ -1,3 +1,9 @@
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=DasKoebi_sqs23&metric=bugs)](https://sonarcloud.io/summary/new_code?id=DasKoebi_sqs23)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=DasKoebi_sqs23&metric=coverage)](https://sonarcloud.io/summary/new_code?id=DasKoebi_sqs23)
+[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=DasKoebi_sqs23&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=DasKoebi_sqs23)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=DasKoebi_sqs23&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=DasKoebi_sqs23)
+
+
 # sqs23
 SQS Vorlesung Sommersemester 2023
 
@@ -13,7 +19,7 @@ Die Gliederung der Inhalte erfolgt nach der ARC42-Vorlage.
 
 # 1. Einführung und Ziele
 
-Dieser Abschnitt soll in die Aufgabenstellung einführen. 
+Dieser Abschnitt soll in die Aufgabenstellung einführen.
 Zusätzlich werden die Ziele skizziert, welche ISO-to-Name verfolgt.
 
 ## 1.1 Aufgabenstellung
@@ -34,11 +40,11 @@ Zusätzlich werden die Ziele skizziert, welche ISO-to-Name verfolgt.
 ## 1.2 Qualitätsziele
 | Quality Category          | Quality             | Description                                                                                                                                                                   | Szenario |
 |:--------------------------|:--------------------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:--------:|
-| Usability                 | Leicht zu bedienen  | Der Endbenutzer soll mithilfe einer integrierten Webseite die Möglichkeit haben, seine ISBN nummer einzugeben, ohne dafür direkt mit der API zu kommunizieren.                                                                                                                         |          |  
+| Usability                 | Leicht zu bedienen  | Der Endbenutzer soll mithilfe einer integrierten Webseite die Möglichkeit haben, seine ISBN nummer einzugeben, ohne dafür direkt mit der API zu kommunizieren.                                                                                                                         |          |
 |                           | Leicht zu verstehen | Die Anwendung sollte individuell verständlich sein, ohne dass sie vorher in einem langwierigen Prozess erlernt werden muss.                                                   |          |
 | Performance               | Genauigkeit         | Der zurückgegebene Titel sollte auch zu der angegebenen ISBN gehören                                                                                                          |          |
 |                           | Robustheit          | Das System muss unter allen angegebenen Umgebungs- und Betriebsbedingungen zuverlässig funktionieren.                                                                         |          |
-| Maintainability & Support | Wartbarkeit         | Das System soll durch eindeutige Fehlermeldungen leicht verständlich und wartbar werden. So sollte ein Benutzer bei einer Fehleingabe selbst auf den Fehler schließen können. |          |
+| Maintainability & Support | Wartbarkeit         | Durch das Setzen von verschiedenen Env-Variablen soll es möglich sein, leicht ein Testsetup auzusetzen, oder einzelne Schnittestellen auszutauschen. |          |
 |                           | Überprüfung         | Durch die Überprüfung der empfangenen Anfrage soll sichergestellt werden, dass nur korrekte Daten empfangen werden.                                                           |  10.2.1  |
 | Security                  | Integrität          | Für die Kommunikation der API-Schnitstelle von Google wird ein Token benötigt. Dieses wird mithilfe einer ENV-Variable eingelesen, damit dieses individuell und nicht statisch ist.                                                                              |          |
 
@@ -51,7 +57,7 @@ Zusätzlich werden die Ziele skizziert, welche ISO-to-Name verfolgt.
 | Endnutzer | /       | Einfache Handhabung der REST-Schnittstelle zur Ermittlung des Titels anhand einer ISBN. |
 
 # 2. Randbedingungen
-Für den Lösungsentwurf mussten zu Beginn verschiedene Randbedingungen beachtet werden. 
+Für den Lösungsentwurf mussten zu Beginn verschiedene Randbedingungen beachtet werden.
 Mithilfe dieses Abschnitts sollen diese erläutert werden und wenn nötig auch die dazugehörige Motivation.
 
 ## 2.1 Technische Randbedingungen
@@ -71,7 +77,7 @@ Mithilfe dieses Abschnitts sollen diese erläutert werden und wenn nötig auch d
 | Vorgehensmodell                        | Entwicklung risikogetrieben, iterativ und inkrementell. Zur Dokumentation der Architektur kommt arc42 zum Einsatz. Eine Architekturdokumentation, gegliedert nach dieser Vorlage ist zentrales,Projektergebnis |
 | Entwicklungswerkzeuge                  | Erstellung der Java-Quelltexte in IntelliJ. Die Software muss allerdings auch alleine mit Gradle, ohne IDE baubar sein, damit diese später in einem Dockercontainer laufen kann.                              |
 | Konfigurations- und Versionsverwaltung | Github                                                                                                                                                                                                        |
-| Testwerkzeuge und -prozesse            | JUnit im Annotationsstil sowohl für inhaltliche Richtigkeit als auch, für Integrationstests und die Einhaltung von Effizienzvorgaben. K6 für Lasttest. Endtests werden mithilfe von Cypress durchgeführt.      |
+| Testwerkzeuge und -prozesse            | JUnit im Annotationsstil sowohl für inhaltliche Richtigkeit als auch, für Integrationstests und die Einhaltung von Effizienzvorgaben. K6 für Lasttest. Endtests werden mithilfe von Cypress durchgeführt. Docker wird per pre-commit mithilfe von Hadolint überprüft. Abhängigkeiten werden mithilfe des Github dependabot überprüft. Zusätzlich wird das Repo von Gitguard überprüft. Zusätzlich wird mithilfe von Archtests die  Architektur getestet. Die statische Codeanalyse wird per [Sonarcloud](https://sonarcloud.io/project/overview?id=DasKoebi_sqs23) durchgeführt. |
 | Veröffentlichung als Open Source       | Die Quelltexte der Lösung oder zumindest Teile werden als Open Source,verfügbar gemacht. Lizenz: GNU General Public License version 3.0,(GPLv3). Gehostet bei GitHub: https://github.com/DasKoebi/sqs23       |
 
 ## 2.3 Konventionen
@@ -79,8 +85,10 @@ Mithilfe dieses Abschnitts sollen diese erläutert werden und wenn nötig auch d
 | Randbedingung                | Erläuterung, Hintergrund                                                                    |
 |------------------------------|---------------------------------------------------------------------------------------------|
 | Architekturdokumentation     | Terminologie und Gliederung nach dem deutschen arc42-Template in der Version 6.0            |
-| Kodierrichtlinien für Java   | Java Coding Conventions von IntelliJ geprüft.                                               |
-| Kodierrichtlinien für Docker | Docker empfehlungen mithilfe von Hadolint (https://hadolint.github.io/hadolint/) überprüft. |
+| Kodierrichtlinien für Java   | Java Coding Conventions von IntelliJ geprüft. Zusätzlich werden Archtets verwendet                                              |
+| Kodierrichtlinien für Docker | Docker empfehlungen mithilfe von Hadolint per pre-commit überprüft. |
+| Statische Codeanalyse | Sonarcloud übernimmt die statische Codeanalyse. |
+
 
 # 3. Kontextabgrenzung
 
@@ -88,22 +96,18 @@ Mithilfe dieses Abschnittes wird das Umfeld beschrieben. Hier wird beschrieben, 
 
 ## 3.1 Fachlicher Kontext
 
-### Benutzer
-Der Benutzer kann mit dem System interagieren.
+Mithilfe folgender Grafik soll die logische Architektur des Systems veranschaulicht werden.
+Hierbei ist die Kommunikation mit dem Nutzer und die Anbindung zu externen Systemen erkennbar.
 
-### Datenbank
-
-Bei der Abfrage von Daten wird zuerst in einer Datenbank überprüft, ob die Daten vorhanden sind.
-
-### Google API
-
-Sollten die Daten nicht vorhanden sein, werden diese bei der Google API abgefragt.
+![Fachlicher_Kontext](pictures/Kontext.png)
 
 ## 3.2 Technischer- oder Verteilungskontext
 
-### Frontend
+Zuerst werden die zentralen Bausteine des Softwaresystems dargestellt.
+Auch soll ersichtlich sein, wie diese interagieren.
 
-Mithilfe des Frontends kann der Benutzer über eine grafische Oberfläche mit dem System interagieren. 
+![Container](pictures/Container.png)
+
 
 # 4. Lösungsstrategie
 Hier werden die wichtigsten Ziele und Lösungsansätze Gegenübergestellt.
@@ -114,11 +118,11 @@ Hier werden die wichtigsten Ziele und Lösungsansätze Gegenübergestellt.
 |-------------------|---------------------------------------------------------------------------------------------|
 | Änderbarkeit      | - verbreitete Programmiersprache Java, - Hohe Testabdeckung als Sicherheitsnetz             |
 | Interoperabilität | - Verwendung des verbreiteten Kommunikationsprotokolls http,  Einsatz des portablen Java    |
-| Portabilität      | - Einsatz durch Docker (b)                                                                  |
+| Portabilität      | - Einsatz durch Docker                                                                  |
 
 ## 4.2 Der Aufbau von ISBN-to-Name
 
-ISBN-to-Name ist als Java-Programm mit Springboot realisiert. 
+ISBN-to-Name ist als Java-Programm mit Springboot realisiert.
 Grob lässt es sich in folgende Teile aufteilen:
 
 - eine Implementierung der HTTP-GET-Schnittstelle
@@ -126,28 +130,42 @@ Grob lässt es sich in folgende Teile aufteilen:
 - einen Kommunikationsservice mit der Google API
 - einen Service zur überprüfung der ISBN
 
-Mithilfe dieser Zerlegung ist es möglich, dinge wie die Kommunikation zu Google API auszutauschen. 
+![Technikstack](/pictures/Technikstack.png)
+
+Mithilfe dieser Zerlegung ist es möglich, dinge wie die Kommunikation zu Google API auszutauschen.
 Ale Teile sind durch Schnittstellen abstrahiert. Die Zerlegung ermöglicht es weiterhin, die Software leicht automatisch zu testen.
+
+**Spring Boot** ist eine weitverbreitetes Framework, welches es ermöglicht Java-REST-Endpunkte zu verwirklichen
+
+**PostgreSQL** ist eine moderne und weitverbreitete SQL-Datenbank, welche kostenlos zur verfügung steht.
+
+**GoogleAPI** Die Google-API ist mithilfe eines privaten Schlüssels, kostenfrei zu benutzen und bietet viele Daten an. Daher ist diese auch das mittel der Wahl für dieses Projekt.
 
 ## 4.3 Anbindung
 
-ISBN-to-Name besitzt ein integriertes Frontend. Welches es den Benutzer ermöglicht, Anfragen nicht nur über eine HTTP-Get anfrage zu stellen, sondern diese bequem im Browser durchzuführen. 
+ISBN-to-Name besitzt ein integriertes Frontend. Welches es den Benutzer ermöglicht, Anfragen nicht nur über eine HTTP-Get anfrage zu stellen, sondern diese bequem im Browser durchzuführen.
 
 # 5. Bausteinsicht
 
-Dieser Abschnitt beschreibt die Zerlegung von ISBN-to-Name in Module, wie sie sich auch in der Paketstruktur des Java-Quelltextes widerspiegelt.
+Die einzelnene Baustene sind bereits in [Kapitel 3](#Kontextabgrenzung) ersichtlich.
+Daher werden diese hier nicht erneut aufgelistet.
 
 # 6. Laufzeitsicht
 
-Diese Sicht visualisiert im Gegensatz zur statischen Bausteinsicht dynamische Aspekte.
+Nachdem ein Nutzer eine eingabe vorgenommen hat, wird diese durch das Frontend an das Backend weitergeleitet.
+Hierbei handelt es sich um eine GET-Request, welche den eingegebenen Inhalt in der URL als parameter enthält.
 
-## 6.1 Walkthrough
-![Sequenzdiagramm](https://sequencediagram.org/index.html?presentationMode=readOnly#initialData=C4S2BsFMAIBUAsQGdrOgQ2qCkBQv0BjYAewCdoBVJSM3AB3TNEJEYDthoApdAN3QBaAIL16uACbpg6AEboa0ACLS5CvAyYs26TtADiJEgHMo+arUEA+XgJFiAXPoCisQQCVIARwCukJMC47CTAMCR8tFQ0ZAA0tkKi9A4AkgDKAEIActAA7iBkEhg+KJTuADLQspAAXiaQ7LgqMvI0ADyC8fZJhPCQhADWDnBgkOCo7MqqLXjo4FywI2PIXOwgPVwgE0318uz9jVPqgtadiQ64p2LWhiZQQy5unr7+gTemkMc2-AmOC6HguFGij+o1QAXGk1C7F2+yaahon0uSRBAPqEgu3y6nwsZCGKKAA)
+Im Backend wird anschließend überprüft ob die erhaltenen ISBN 10- oder 13-Stellen aufweißt.
+Daraufhin wird die Prüfziffer der jeweiligen ISBN-Nummer berechnet.
+Sobald dies erfolgreich überprüft wurde, wird in der Datenbank geschaut ob die ISBN-Nummer bereits vorhanden ist.
 
-Zunächst übermittelt der User mithilfe der HTTP-GET-Request eine ISBN an das System. 
-Diese ISBN wird aus der URL abgeleitet.
-Anschließend wird innerhalb des Systems überprüft, ob die ISBN in der Datenbank hinterlegt ist, sollte dies der Fall sein, werden die Informationen zurückgegeben.
-Ansonst wird die Google API befragt, die erhaltenen Daten (ISBN-10, ISBN-13, Name) in der Datenbank gespeichert und der Name zurückgegeben.
+Sollte dies nicht der Fall sein, so wird die ISBN-Nummer an die Google-API weitergereicht und das Ergebnis in der Datenbank gespeichert und dem Nutzer ausgegeben.
+
+Sollte die ISBN-Nummer in der Datenbank enthalten sein, so wird direkt der dazugehörige Name ausgegeben.
+
+Mithilfe folgendem Sequencediagram soll dieser Prozess veranschaulicht werden.
+
+![Sequencediagram](/pictures/sequencediagram.png)
 
 # 7. Verteilungsschicht
 
@@ -165,7 +183,7 @@ Zusätzliche Voraussetzungen:
 
 Damit die Anwendung gestartet werden kann, ist eine Docker-Compose Datei beigelegt.
 Diese dient als Vorlage, wobei hier noch die Variable `API_KEY` angepasst werden muss.
-Zusätzlich sollte für das Datenbankpasswort ein anderer Wert vergeben werden. 
+Zusätzlich sollte für das Datenbankpasswort ein anderer Wert vergeben werden.
 
 # 8. Querschnittliche Konzepte
 
@@ -185,7 +203,7 @@ Die ISBN wird anhand der aufgerufenen URL abgeleitet.
 Der Aufbau ist exemplarisch: `https://www.example.com/v1/books/${ISBN}`
 
 ## 9.2 Projektsprache
-Das Projekt wird in Java geschrieben, da hier das vorhandene Know-How verwendet werden kann. 
+Das Projekt wird in Java geschrieben, da hier das vorhandene Know-How verwendet werden kann.
 Außerdem wurden schon vor diesem Projekt, REST-Schnittstellen in dieser Sprache intern verwirklicht.
 
 ## 9.3 Datenbank
@@ -196,7 +214,7 @@ Bei der Datenbank handelt es sich um eine Postgres Datenbank, da auch hier das K
 Docker wurde unteranderm deswegen verwendet, da es kostenlos verwendet werden kann.
 Durch diese Virtualisierung kann auf allen gängigen Systemen wie Windows, Linux und Mac das Programm verwendet werden.
 
-Außerdem ist es mithilfe der CI-Pipline möglich, das Programm automatisch neu zu bauen und als Container online zur verfügung zu stellen. 
+Außerdem ist es mithilfe der CI-Pipline möglich, das Programm automatisch neu zu bauen und als Container online zur verfügung zu stellen.
 Somit kann sehr schnell und einfach immer die neuste Version verwendet werden.
 
 # 10. Qualitätsanforderungen
@@ -222,16 +240,16 @@ Dieser kann wiederumm vallidiert werden, was allerdings einen großen mehraufwan
 
 ## Risikominderung
 
-Durch frühe und vermehrte Test kann hier Sicherheit geboten werden. 
+Durch frühe und vermehrte Test kann hier Sicherheit geboten werden.
 
 
-# 13 
+# 13
 
 ## Env-Variablen
 | Name       | Beschreibung                                                                                     | Beispiel                                              | Standardwert                                          |
 |------------|--------------------------------------------------------------------------------------------------|-------------------------------------------------------|-------------------------------------------------------|
 | `API_KEY`  | Der API-Key für die Google-Datenbank. Dieser wird benötigt, um Abfragen bei Google zu ermöglichen | `A791023AKC843123`                                    | Keinen                                                |
 | `BASE_URI` | Die Base URI der Google-API, an diese werden die ISBN-Nummern gesendet.                          | `https://www.googleapis.com/books/v1/volumes?q=isbn:` | `https://www.googleapis.com/books/v1/volumes?q=isbn:` |
-| `SPRING_DATASOURCE_URL` | Hierbei handelt es sich um die URL, welche die Anwendung benötigt, um sich mit der Datenbank zu verbinden. | `jdbc:postgresql://db:5432/postgres` | `jdbc:postgresql://host.docker.internal:5432/postgres` | 
+| `SPRING_DATASOURCE_URL` | Hierbei handelt es sich um die URL, welche die Anwendung benötigt, um sich mit der Datenbank zu verbinden. | `jdbc:postgresql://db:5432/postgres` | `jdbc:postgresql://host.docker.internal:5432/postgres` |
 | `SPRING_DATASOURCE_USERNAME` | Hierbei handelt es sich um den Benutzernamen des Datenbankbenutzers | `postgres` | `postgres` |
 | `SPRING_DATASOURCE_PASSWORD` | Hierbei handelt es sich um das Passwort des Datenbankbenutzers | `changeMe!` | Keinen |

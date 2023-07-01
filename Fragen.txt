@@ -17,3 +17,5 @@ Cypress Testname sprechend
 
 Gitgaur reinschreiben + dependency bot eingeschaltet
 
+
+TODO: Ab 8 weitermachen
