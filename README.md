@@ -187,12 +187,26 @@ Zusätzlich sollte für das Datenbankpasswort ein anderer Wert vergeben werden.
 
 # 8. Querschnittliche Konzepte
 
-Dieser Abschnitt beschreibt allgemeine Strukturen und Aspekte, die systemweit gelten.
 
-## 8.1 ISBN-Domänenmodell
+## Sicherheit
 
-Die ISBN welche von der Google API zurückgegen wird wird als JSON ausgegeben.
-Zur Modelierung im System wird ein Klassenmodell wie folgt verwendet:
+Die Sicherheit im System wird durch verschiedene Security-Tests geprüft. 
+Die API ist so gestalltet das der Benutzer nur lese Zugriff auf das System hat.
+
+## Frontend
+
+Durch einfache gestaltung des Frontends soll der Benutzer nicht überfordert sein. 
+
+## Verfügbarkeit
+
+Sollte es vorkommen, dass die externe Datenbank nicht verfügbar ist, so können mithilfe der integrierten Datenbank zumindest Namen zu bereits abgerufenen ISBN-Nummern überprüft werden.
+
+## Intern
+
+Die empfangene ISBN wird im Backend überprüft.
+
+Durch die größe der Anwendung scheint ein explizites Session Handlin nicht notwendig zu sein.
+
 
 # 9. Entscheidungen
 
@@ -221,11 +235,24 @@ Somit kann sehr schnell und einfach immer die neuste Version verwendet werden.
 
 Dieser Abschnitt beinhaltet konkrete Qualitätsszenarien.
 
-## 10.1
 
-## 10.2 Quality Scenarios
+## 10.1 Quality Scenarios
 | ID | Description |
-| 10.2.1 | Ungültige ISBN-Nummern sollen erkannt und dem Nutzer aufzeigt werden, welcher Fehler vorliegt. |
+| --- | --- |
+| Benutzereingaben | ISBN-Nummern sollen auf ihre korrektheit überprüft werden. Dazu soll die Prüfziffer berechnet werden |
+| Datenschutz | Es sollen keine personenbezogenen Daten abgespeichert werden. |
+| Anpassbarkeit | Mithilfe einzelnen ENV-Variablen soll es möglich sein, die Anwendung leicht zu testen und auf spezifische gegebenheiten einzurichten |
+| Kompatibilität | Die Anwendung soll mithilfe von Docker auf den gängigsten Systemen wie Mac OS, Linux und Windows funktionsfähig sein. |
+
+## Env-Variablen für die Anpassbarkeit
+| Name       | Beschreibung                                                                                     | Beispiel                                              | Standardwert                                          |
+|------------|--------------------------------------------------------------------------------------------------|-------------------------------------------------------|-------------------------------------------------------|
+| `API_KEY`  | Der API-Key für die Google-Datenbank. Dieser wird benötigt, um Abfragen bei Google zu ermöglichen | `A791023AKC843123`                                    | Keinen                                                |
+| `BASE_URI` | Die Base URI der Google-API, an diese werden die ISBN-Nummern gesendet.                          | `https://www.googleapis.com/books/v1/volumes?q=isbn:` | `https://www.googleapis.com/books/v1/volumes?q=isbn:` |
+| `SPRING_DATASOURCE_URL` | Hierbei handelt es sich um die URL, welche die Anwendung benötigt, um sich mit der Datenbank zu verbinden. | `jdbc:postgresql://db:5432/postgres` | `jdbc:postgresql://host.docker.internal:5432/postgres` |
+| `SPRING_DATASOURCE_USERNAME` | Hierbei handelt es sich um den Benutzernamen des Datenbankbenutzers | `postgres` | `postgres` |
+| `SPRING_DATASOURCE_PASSWORD` | Hierbei handelt es sich um das Passwort des Datenbankbenutzers | `changeMe!` | Keinen |
+
 
 # 11 Risiken
 
@@ -242,14 +269,33 @@ Dieser kann wiederumm vallidiert werden, was allerdings einen großen mehraufwan
 
 Durch frühe und vermehrte Test kann hier Sicherheit geboten werden.
 
+# 11.2 Tests
 
-# 13
+## Unittests
+ - JUNIT 5 Tests
+ - Mit diesen Test soll die Korrektheit einzelner Funktionen geprüft werden.
 
-## Env-Variablen
-| Name       | Beschreibung                                                                                     | Beispiel                                              | Standardwert                                          |
-|------------|--------------------------------------------------------------------------------------------------|-------------------------------------------------------|-------------------------------------------------------|
-| `API_KEY`  | Der API-Key für die Google-Datenbank. Dieser wird benötigt, um Abfragen bei Google zu ermöglichen | `A791023AKC843123`                                    | Keinen                                                |
-| `BASE_URI` | Die Base URI der Google-API, an diese werden die ISBN-Nummern gesendet.                          | `https://www.googleapis.com/books/v1/volumes?q=isbn:` | `https://www.googleapis.com/books/v1/volumes?q=isbn:` |
-| `SPRING_DATASOURCE_URL` | Hierbei handelt es sich um die URL, welche die Anwendung benötigt, um sich mit der Datenbank zu verbinden. | `jdbc:postgresql://db:5432/postgres` | `jdbc:postgresql://host.docker.internal:5432/postgres` |
-| `SPRING_DATASOURCE_USERNAME` | Hierbei handelt es sich um den Benutzernamen des Datenbankbenutzers | `postgres` | `postgres` |
-| `SPRING_DATASOURCE_PASSWORD` | Hierbei handelt es sich um das Passwort des Datenbankbenutzers | `changeMe!` | Keinen |
+## ArchTest
+Mithilfe von ArchUnit wird die Architektur überprfüt
+## Integrationstest / End-to-End Tests
+Mithilfe von Cypress wird ein End-to-End Test durchgeführt, welche auch gleichzeitig als Integrationstest dient.
+
+## Statische Codeanalyse
+Mithilfe der CI-Pipeline wird das Projekt an Sonarcloud zur analyse gesendet.
+Hier wird die statische Analyse des Codes durchgeführt. Mithilfe der Badges soll das Ergebnis von Sonarcloud leicht ersichtlich sein.
+
+## Pre-Commit
+Da die Anwendung als Dockercontainer zur verfügung steht, welcher ebenfalls in der CI-Pipeline gebaut wird, wird die dazugehörige Dockerfile von Hadolint überprüft.
+Hierbei wird durch einen Pre-Commit die Datei auf fehler überprüft.
+Zusätzlich werden auch kleinere Hooks, wie `end-of-file-fixer` durchgeführt.
+
+## Abhängigkeiten
+Damit das Projekt nicht durch Abhängigkeiten offene Sicherheitslücken aufweist, ist für dieses Projekt der Github integrierten Service DependaBot aktiviert und GitGuard eingerichtet.
+
+## Lasttest
+
+Mithilfe von k6 werden Lasttest für die Anwendung getestet.
+Diese baut in einem Zeitraum von einer Minute 50 Nutzer auf und testet anschließend zwei Minuten mit diesen die Anwendung. Anschließend wird weiterhin eine Minute getestet und dabei die Anzahl der Nutzer wieder auf 0 veringert.
+Hierbei wird einmal ein Lasttest mithilfe einer funktionierenden ISBN und einer flaschen ISBN durchgeführt.
+
+
