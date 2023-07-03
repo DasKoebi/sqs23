@@ -4,6 +4,8 @@ package inf.iso_to_name.books;
 import inf.iso_to_name.proxy.GoogleISOApi;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.Mockito;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -45,21 +47,10 @@ class BookServiceTest {
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
-    @Test
-    void testValidIsbn(){
-        assertTrue(bookService.isIsbn10Valid("1569319014"));
-    }
-    @Test
-    void testValidIsbn2(){
-        assertTrue(bookService.isIsbn10Valid("3644009473"));
-    }
-    @Test
-    void testValidIsbnWithX(){
-        assertTrue(bookService.isIsbn10Valid("354059101X"));
-    }
-    @Test
-    void testValidIsbnWithSmallX(){
-        assertTrue(bookService.isIsbn10Valid("354059101x"));
+    @ParameterizedTest
+    @ValueSource(strings = {"1569319014", "3644009473", "354059101X", "354059101x"})
+    void testValidIsbn(String isbn) {
+        assertTrue(bookService.isIsbn10Valid(isbn));
     }
 
     @Test
