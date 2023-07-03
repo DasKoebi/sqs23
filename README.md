@@ -44,9 +44,9 @@ Zusätzlich werden die Ziele skizziert, welche ISO-to-Name verfolgt.
 |                           | Leicht zu verstehen | Die Anwendung sollte individuell verständlich sein, ohne dass sie vorher in einem langwierigen Prozess erlernt werden muss.                                                   |          |
 | Performance               | Genauigkeit         | Der zurückgegebene Titel sollte auch zu der angegebenen ISBN gehören                                                                                                          |          |
 |                           | Robustheit          | Das System muss unter allen angegebenen Umgebungs- und Betriebsbedingungen zuverlässig funktionieren.                                                                         |          |
-| Maintainability & Support | Wartbarkeit         | Durch das Setzen von verschiedenen Env-Variablen soll es möglich sein, leicht ein Testsetup auzusetzen, oder einzelne Schnittestellen auszutauschen. |          |
+| Maintainability & Support | Wartbarkeit         | Durch das Setzen von verschiedenen Env-Variablen soll es möglich sein, leicht ein Test-Set-up aufzusetzen, oder einzelne Schnittstellen auszutauschen. |          |
 |                           | Überprüfung         | Durch die Überprüfung der empfangenen Anfrage soll sichergestellt werden, dass nur korrekte Daten empfangen werden.                                                           |  10.2.1  |
-| Security                  | Integrität          | Für die Kommunikation der API-Schnitstelle von Google wird ein Token benötigt. Dieses wird mithilfe einer ENV-Variable eingelesen, damit dieses individuell und nicht statisch ist.                                                                              |          |
+| Security                  | Integrität          | Für die Kommunikation der API-Schnittstelle von Google wird ein Token benötigt. Dieses wird mithilfe einer ENV-Variable eingelesen, damit dieses individuell und nicht statisch ist.                                                                              |          |
 
 
 
@@ -74,11 +74,11 @@ Mithilfe dieses Abschnitts sollen diese erläutert werden und wenn nötig auch d
 |----------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | Team                                   | Lukas Kolb, unterstützt durch die Vorlesung.                                                                                                                                                                  |
 | Zeitplan                               | Beginn der Entwicklung war April 2023, erster lauffähiger Prototyp war Mai 2023. Fertistellung mit sämtlichen Tests war im Juni 2023.                                                                           |
-| Vorgehensmodell                        | Entwicklung risikogetrieben, iterativ und inkrementell. Zur Dokumentation der Architektur kommt arc42 zum Einsatz. Eine Architekturdokumentation, gegliedert nach dieser Vorlage ist zentrales,Projektergebnis |
+| Vorgehensmodell                        | Entwicklung risikogetrieben, iterativ und inkrementell. Zur Dokumentation der Architektur kommt arc42 zum Einsatz. Eine Architekturdokumentation, gegliedert nach dieser Vorlage, ist ein zentrales Projektergebnis. |
 | Entwicklungswerkzeuge                  | Erstellung der Java-Quelltexte in IntelliJ. Die Software muss allerdings auch alleine mit Gradle, ohne IDE baubar sein, damit diese später in einem Dockercontainer laufen kann.                              |
 | Konfigurations- und Versionsverwaltung | Github                                                                                                                                                                                                        |
-| Testwerkzeuge und -prozesse            | JUnit im Annotationsstil sowohl für inhaltliche Richtigkeit als auch, für Integrationstests und die Einhaltung von Effizienzvorgaben. K6 für Lasttest. Endtests werden mithilfe von Cypress durchgeführt. Docker wird per pre-commit mithilfe von Hadolint überprüft. Abhängigkeiten werden mithilfe des Github dependabot überprüft. Zusätzlich wird das Repo von Gitguard überprüft. Zusätzlich wird mithilfe von Archtests die  Architektur getestet. Die statische Codeanalyse wird per [Sonarcloud](https://sonarcloud.io/project/overview?id=DasKoebi_sqs23) durchgeführt. |
-| Veröffentlichung als Open Source       | Die Quelltexte der Lösung oder zumindest Teile werden als Open Source,verfügbar gemacht. Lizenz: GNU General Public License version 3.0,(GPLv3). Gehostet bei GitHub: https://github.com/DasKoebi/sqs23       |
+| Testwerkzeuge und -prozesse            | JUnit im Annotationsstil sowohl für inhaltliche Richtigkeit als auch für Integrationstests und die Einhaltung von Effizienzvorgaben. K6 für Lasttest. Endtests werden mithilfe von Cypress durchgeführt. Docker wird per pre-commit mithilfe von Hadolint überprüft. Abhängigkeiten werden mithilfe des Github dependabot überprüft. Zusätzlich wird das Repo von Gitguard überprüft. Zusätzlich wird mithilfe von Archtests die Architektur getestet. Die statische Codeanalyse wird per [Sonarcloud](https://sonarcloud.io/project/overview?id=DasKoebi_sqs23) durchgeführt. |
+| Veröffentlichung als Open Source       | Die Quelltexte der Lösung oder zumindest Teile werden als Open Source, verfügbar gemacht. Lizenz: GNU General Public License Version 3.0,(GPLv3). Gehostet bei GitHub: https://github.com/DasKoebi/sqs23       |
 
 ## 2.3 Konventionen
 
@@ -86,7 +86,7 @@ Mithilfe dieses Abschnitts sollen diese erläutert werden und wenn nötig auch d
 |------------------------------|---------------------------------------------------------------------------------------------|
 | Architekturdokumentation     | Terminologie und Gliederung nach dem deutschen arc42-Template in der Version 6.0            |
 | Kodierrichtlinien für Java   | Java Coding Conventions von IntelliJ geprüft. Zusätzlich werden Archtets verwendet                                              |
-| Kodierrichtlinien für Docker | Docker empfehlungen mithilfe von Hadolint per pre-commit überprüft. |
+| Kodierrichtlinien für Docker | Docker Empfehlungen mithilfe von Hadolint per pre-commit überprüft. |
 | Statische Codeanalyse | Sonarcloud übernimmt die statische Codeanalyse. |
 
 
@@ -110,14 +110,14 @@ Auch soll ersichtlich sein, wie diese interagieren.
 
 
 # 4. Lösungsstrategie
-Hier werden die wichtigsten Ziele und Lösungsansätze Gegenübergestellt.
+Hier werden die wichtigsten Ziele und Lösungsansätze gegenübergestellt.
 
 ## 4.1 Einstieg in die Lösungsstrategie
 
-| Analysierbarkeit  | - Architekturüberblick gegliedert nach arc42 - Explizites, objektorientiertes Domänenmodell |
+| Analysierbarkeit  | - Architekturüberblick gegliedert nach arc42 - explizites, objektorientiertes Domänenmodell |
 |-------------------|---------------------------------------------------------------------------------------------|
 | Änderbarkeit      | - verbreitete Programmiersprache Java, - Hohe Testabdeckung als Sicherheitsnetz             |
-| Interoperabilität | - Verwendung des verbreiteten Kommunikationsprotokolls http,  Einsatz des portablen Java    |
+| Interoperabilität | - Verwendung des verbreiteten Kommunikationsprotokolls HTTP,  Einsatz des portablen Java    |
 | Portabilität      | - Einsatz durch Docker                                                                  |
 
 ## 4.2 Der Aufbau von ISBN-to-Name
@@ -128,18 +128,18 @@ Grob lässt es sich in folgende Teile aufteilen:
 - eine Implementierung der HTTP-GET-Schnittstelle
 - einen Kommunikationsservice mit der Datenbank
 - einen Kommunikationsservice mit der Google API
-- einen Service zur überprüfung der ISBN
+- einen Service zur Überprüfung der ISBN
 
 ![Technikstack](/pictures/Technikstack.png)
 
 Mithilfe dieser Zerlegung ist es möglich, dinge wie die Kommunikation zu Google API auszutauschen.
 Ale Teile sind durch Schnittstellen abstrahiert. Die Zerlegung ermöglicht es weiterhin, die Software leicht automatisch zu testen.
 
-**Spring Boot** ist eine weitverbreitetes Framework, welches es ermöglicht Java-REST-Endpunkte zu verwirklichen
+**Spring Boot** ist ein weitverbreitetes Framework, welches es ermöglicht, Java-REST-Endpunkte zu verwirklichen
 
 **PostgreSQL** ist eine moderne und weitverbreitete SQL-Datenbank, welche kostenlos zur verfügung steht.
 
-**GoogleAPI** Die Google-API ist mithilfe eines privaten Schlüssels, kostenfrei zu benutzen und bietet viele Daten an. Daher ist diese auch das mittel der Wahl für dieses Projekt.
+**GoogleAPI** Die Google-API ist mithilfe eines privaten Schlüssels kostenfrei zu benutzen und bietet viele Daten an. Daher ist diese auch das mittel der Wahl für dieses Projekt.
 
 ## 4.3 Anbindung
 
@@ -147,30 +147,30 @@ ISBN-to-Name besitzt ein integriertes Frontend. Welches es den Benutzer ermögli
 
 # 5. Bausteinsicht
 
-Die einzelnene Baustene sind bereits in [Kapitel 3](#Kontextabgrenzung) ersichtlich.
+Die einzelnen Bausteine sind bereits in [Kapitel 3](#Kontextabgrenzung) ersichtlich.
 Daher werden diese hier nicht erneut aufgelistet.
 
 # 6. Laufzeitsicht
 
-Nachdem ein Nutzer eine eingabe vorgenommen hat, wird diese durch das Frontend an das Backend weitergeleitet.
-Hierbei handelt es sich um eine GET-Request, welche den eingegebenen Inhalt in der URL als parameter enthält.
+Nachdem ein Nutzer eine Eingabe vorgenommen hat, wird diese durch das Frontend an das Backend weitergeleitet.
+Hierbei handelt es sich um eine GET-Request, welche den eingegebenen Inhalt in der URL als Parameter enthält.
 
-Im Backend wird anschließend überprüft ob die erhaltenen ISBN 10- oder 13-Stellen aufweißt.
+Im Backend wird anschließend überprüft, ob die erhaltenen ISBN 10- oder 13-Stellen aufweist.
 Daraufhin wird die Prüfziffer der jeweiligen ISBN-Nummer berechnet.
-Sobald dies erfolgreich überprüft wurde, wird in der Datenbank geschaut ob die ISBN-Nummer bereits vorhanden ist.
+Sobald dies erfolgreich überprüft wurde, wird in der Datenbank geschaut, ob die ISBN-Nummer bereits vorhanden ist.
 
 Sollte dies nicht der Fall sein, so wird die ISBN-Nummer an die Google-API weitergereicht und das Ergebnis in der Datenbank gespeichert und dem Nutzer ausgegeben.
 
 Sollte die ISBN-Nummer in der Datenbank enthalten sein, so wird direkt der dazugehörige Name ausgegeben.
 
-Mithilfe folgendem Sequencediagram soll dieser Prozess veranschaulicht werden.
+Mithilfe folgendem Sequenzdiagramm soll dieser Prozess veranschaulicht werden.
 
 ![Sequencediagram](/pictures/sequencediagram.png)
 
 # 7. Verteilungsschicht
 
 Diese Schicht beschreibt den Betrieb von ISBN-to-Name.
-Dadurch das dieses Programm als Dockercontainer zur verfügung steht, ist dies recht anspruchslos.
+Dadurch das dieses Programm als Dockercontainer zur Verfügung steht, ist dies recht anspruchslos.
 
 ## 7.1 Infrastruktur
 
@@ -190,12 +190,12 @@ Zusätzlich sollte für das Datenbankpasswort ein anderer Wert vergeben werden.
 
 ## Sicherheit
 
-Die Sicherheit im System wird durch verschiedene Security-Tests geprüft. 
-Die API ist so gestalltet das der Benutzer nur lese Zugriff auf das System hat.
+Die Sicherheit im System wird durch verschiedene Security-Tests geprüft.
+Die API ist so gestaltet das der Benutzer nur lese Zugriff auf das System hat.
 
 ## Frontend
 
-Durch einfache gestaltung des Frontends soll der Benutzer nicht überfordert sein. 
+Durch einfache Gestaltung des Frontends soll der Benutzer nicht überfordert sein.
 
 ## Verfügbarkeit
 
@@ -205,12 +205,12 @@ Sollte es vorkommen, dass die externe Datenbank nicht verfügbar ist, so können
 
 Die empfangene ISBN wird im Backend überprüft.
 
-Durch die größe der Anwendung scheint ein explizites Session Handlin nicht notwendig zu sein.
+Durch die Größe der Anwendung scheint ein explizites Session-Handling nicht notwendig zu sein.
 
 
 # 9. Entscheidungen
 
-Hier sollen gewisse Entscheidungen nachfollzogen werden können.
+Hier sollen gewisse Entscheidungen nachvollzogen werden können.
 
 ## 9.1 Übermittlung der ISBN
 Die ISBN wird anhand der aufgerufenen URL abgeleitet.
@@ -218,17 +218,17 @@ Der Aufbau ist exemplarisch: `https://www.example.com/v1/books/${ISBN}`
 
 ## 9.2 Projektsprache
 Das Projekt wird in Java geschrieben, da hier das vorhandene Know-How verwendet werden kann.
-Außerdem wurden schon vor diesem Projekt, REST-Schnittstellen in dieser Sprache intern verwirklicht.
+Außerdem wurden schon vor diesem Projekt REST-Schnittstellen in dieser Sprache intern verwirklicht.
 
 ## 9.3 Datenbank
 Bei der Datenbank handelt es sich um eine Postgres Datenbank, da auch hier das Know-How vorhanden ist und sich diese leicht auf jedem System realisieren lässt.
 
 ## 9.4 Docker
 
-Docker wurde unteranderm deswegen verwendet, da es kostenlos verwendet werden kann.
+Docker wurde unter anderem deswegen verwendet, da es kostenlos verwendet werden kann.
 Durch diese Virtualisierung kann auf allen gängigen Systemen wie Windows, Linux und Mac das Programm verwendet werden.
 
-Außerdem ist es mithilfe der CI-Pipline möglich, das Programm automatisch neu zu bauen und als Container online zur verfügung zu stellen.
+Außerdem ist es mithilfe der CI-Pipline möglich, das Programm automatisch neu zu bauen und als Container online zur Verfügung zu stellen.
 Somit kann sehr schnell und einfach immer die neuste Version verwendet werden.
 
 # 10. Qualitätsanforderungen
@@ -239,9 +239,9 @@ Dieser Abschnitt beinhaltet konkrete Qualitätsszenarien.
 ## 10.1 Quality Scenarios
 | ID | Description |
 | --- | --- |
-| Benutzereingaben | ISBN-Nummern sollen auf ihre korrektheit überprüft werden. Dazu soll die Prüfziffer berechnet werden |
+| Benutzereingaben | ISBN-Nummern sollen auf ihre Korrektheit überprüft werden. Dazu soll die Prüfziffer berechnet werden |
 | Datenschutz | Es sollen keine personenbezogenen Daten abgespeichert werden. |
-| Anpassbarkeit | Mithilfe einzelnen ENV-Variablen soll es möglich sein, die Anwendung leicht zu testen und auf spezifische gegebenheiten einzurichten |
+| Anpassbarkeit | Mithilfe einzelnen ENV-Variablen soll es möglich sein, die Anwendung leicht zu testen und auf spezifische Gegebenheiten einzurichten |
 | Kompatibilität | Die Anwendung soll mithilfe von Docker auf den gängigsten Systemen wie Mac OS, Linux und Windows funktionsfähig sein. |
 
 ## Env-Variablen für die Anpassbarkeit
@@ -262,8 +262,8 @@ Sollte die ISBN-Nummer nicht korrekt aus der URL des GET-Request interpretiert w
 
 ## Eventualfallplanung
 
-Es wäre möglich von einer GET-Request auf eine POST-Request umzubauen, bei dieser wird die ISBN in einem JSON-Boddy mitgeschickt.
-Dieser kann wiederumm vallidiert werden, was allerdings einen großen mehraufwand bedeuten würde.
+Es wäre möglich, von einer GET-Request auf eine POST-Request umzubauen, bei dieser wird die ISBN in einem JSON-Boddy mitgeschickt.
+Dieser kann wiederum validiert werden, was allerdings einen großen Mehraufwand bedeuten würde.
 
 ## Risikominderung
 
@@ -276,17 +276,17 @@ Durch frühe und vermehrte Test kann hier Sicherheit geboten werden.
  - Mit diesen Test soll die Korrektheit einzelner Funktionen geprüft werden.
 
 ## ArchTest
-Mithilfe von ArchUnit wird die Architektur überprfüt
+Mithilfe der ArchUnit wird die Architektur überprüft
 ## Integrationstest / End-to-End Tests
 Mithilfe von Cypress wird ein End-to-End Test durchgeführt, welche auch gleichzeitig als Integrationstest dient.
 
 ## Statische Codeanalyse
-Mithilfe der CI-Pipeline wird das Projekt an Sonarcloud zur analyse gesendet.
+Mithilfe der CI-Pipeline wird das Projekt an Sonarcloud zur Analyse gesendet.
 Hier wird die statische Analyse des Codes durchgeführt. Mithilfe der Badges soll das Ergebnis von Sonarcloud leicht ersichtlich sein.
 
 ## Pre-Commit
 Da die Anwendung als Dockercontainer zur verfügung steht, welcher ebenfalls in der CI-Pipeline gebaut wird, wird die dazugehörige Dockerfile von Hadolint überprüft.
-Hierbei wird durch einen Pre-Commit die Datei auf fehler überprüft.
+Hierbei wird durch einen Pre-Commit die Datei auf Fehler überprüft.
 Zusätzlich werden auch kleinere Hooks, wie `end-of-file-fixer` durchgeführt.
 
 ## Abhängigkeiten
@@ -295,7 +295,5 @@ Damit das Projekt nicht durch Abhängigkeiten offene Sicherheitslücken aufweist
 ## Lasttest
 
 Mithilfe von k6 werden Lasttest für die Anwendung getestet.
-Diese baut in einem Zeitraum von einer Minute 50 Nutzer auf und testet anschließend zwei Minuten mit diesen die Anwendung. Anschließend wird weiterhin eine Minute getestet und dabei die Anzahl der Nutzer wieder auf 0 veringert.
-Hierbei wird einmal ein Lasttest mithilfe einer funktionierenden ISBN und einer flaschen ISBN durchgeführt.
-
-
+Diese baut in einem Zeitraum von einer Minute 50 Nutzer auf und testet anschließend zwei Minuten mit diesen die Anwendung. Anschließend wird weiterhin eine Minute getestet und dabei die Anzahl der Nutzer wieder auf 0 verringert.
+Hierbei wird einmal ein Lasttest mithilfe einer funktionierenden ISBN und einer falschen ISBN durchgeführt.
